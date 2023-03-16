@@ -1,0 +1,20 @@
+# conda create -n fasternet python=3.9.12 -y
+# conda activate fasternet
+# pip install -r requirements.txt
+
+# ----------------------------------------
+--extra-index-url https://download.pytorch.org/whl/cu113
+
+torch==1.11.0
+torchvision==0.12.0
+pytorch-lightning==1.6.5
+lightning-bolts==0.5.0
+timm==0.6.5
+wandb>=0.12.21
+matplotlib==3.5.2
+fvcore>=0.1.5.post20220512
+
+# ----------------------------------------
+# install the following packages for mmdet
+# pip install mmcv-full==1.6.0 -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.11.0/index.html
+# pip install mmdet==2.25.0

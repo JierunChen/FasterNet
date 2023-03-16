@@ -1,0 +1,72 @@
+strategy: ddp
+benchmark: True
+pretrained: False
+sync_batchnorm: False
+dataset_name: imagenet
+image_size: 224
+#multi_scale: null
+multi_scale: !!str 192_280   # image_size 192 before epoch 280
+test_crop_ratio: 0.9
+# --------------------------------------
+# Optimizer parameters
+# --------------------------------------
+opt: adamw
+weight_decay: 0.03
+momentum: 0.9
+epochs: 300
+clip_grad: null
+precision: 16
+# --------------------------------------
+# Learning rate schedule parameters
+# --------------------------------------
+sched: cosine
+lr: 0.004   # for bs=4096 RELU
+warmup_lr: 0.000001
+min_lr: 0.00001
+warmup_epochs: 20
+# --------------------------------------
+# Distillation parameters
+# --------------------------------------
+teacher_model: regnety_160
+distillation_type: none   # do not use KD by default
+#distillation_type: hard  # should be better than soft
+#distillation_type: soft
+distillation_alpha: 0.5
+distillation_tau: 1.0
+# --------------------------------------
+# Model parameters
+# --------------------------------------
+model_name: fasternet
+mlp_ratio: 2
+embed_dim: 128
+depths: [1, 2, 13, 2]
+feature_dim: 1280
+patch_size: 4
+patch_stride: 4
+patch_size2: 2
+patch_stride2: 2
+layer_scale_init_value: 0 # no layer scale
+drop_path_rate: 0.1
+norm_layer:  BN
+act_layer: RELU
+n_div: 4
+# --------------------------------------
+# Augmentation parameters
+# --------------------------------------
+color_jitter: 0
+aa: rand-m7-mstd0.5-inc1  # Use AutoAugment policy, Rand Augment
+train_interpolation: bicubic    # Training interpolation (random, bilinear, bicubic default: "bicubic")
+smoothing: 0.1    # Label smoothing
+# Random Erase params
+reprob: 0
+remode: pixel
+recount: 1
+# --------------------------------------
+# MixUp/CutMix parameters
+# --------------------------------------
+mixup: 0.3
+cutmix: 1.0
+cutmix_minmax: null   # cutmix min/max ratio, overrides alpha and enables cutmix if set (default: None)
+mixup_prob: 1.0         # Probability of performing mixup or cutmix when either/both is enabled
+mixup_switch_prob: 0.5  # Probability of switching to cutmix when both mixup and cutmix enabled
+mixup_mode: batch       # How to apply mixup/cutmix params. Per "batch", "pair", or "elem"
