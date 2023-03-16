@@ -28,6 +28,11 @@ bash ./dist_test.sh configs/fasternet/mask_rcnn_fasternet_s_fpn_1x_coco.py \
  ckpts/mask_rcnn_fasternet_s_fpn_1x_coco_20221111_063419.pth 8 --eval bbox segm
 ```
 
+To measure its FLOPs, run
+```
+python get_flops.py configs/fasternet/mask_rcnn_fasternet_s_fpn_1x_coco.py
+```
+
 To measure its throughput on a GPU, run
 ```
 CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --nproc_per_node=1 --master_port=29500 \
@@ -35,10 +40,15 @@ benchmark.py configs/fasternet/mask_rcnn_fasternet_s_fpn_1x_coco.py \
 ckpts/mask_rcnn_fasternet_s_fpn_1x_coco_20221111_063419.pth --launcher pytorch --fuse-conv-bn
 ```
 
-To measure its FLOPs, run
-```
-python get_flops.py configs/fasternet/mask_rcnn_fasternet_s_fpn_1x_coco.py
-```
+**Note**: There are an issue related to throughput measurement in the [paper v1](https://arxiv.org/abs/2303.03667). 
+Although it do not affect the conclusion that FasterNet achieves higher accuracy-latency efficiency, we clarify that:
+
+- PConv and FasterNet use `"slicing"` type for faster inference and throughput measurement. 
+However, it implicitly modifies the shortcut, making a computation inconsistency to using `"split_cat"`. 
+To fix that, we may 
+    - clone the input via `x = x.clone()` before applying partial convolution, but it introduces additional latency and can defeats the benefits of using `"slicing"` over `"split_cat"`.
+    - move the shortcut after the PConv operator, which resolves the issue and is likely to maintain the effectiveness. Models modified are under retraining and will be released once finished.        
+
 
 ## Training
 
