@@ -89,7 +89,7 @@ Although they do not affect the conclusion that PConv and FasterNet achieve high
 - PConv and FasterNet use `"slicing"` type for faster inference and latency/throughput measurement. 
 However, it implicitly modifies the shortcut, making a computation inconsistency to using `"split_cat"`. 
 To fix that, we may 
-    - clone the input via `x = x.clone()` before applying partial convolution, but it introduces additional latency and can defeats the benefits of using `"slicing"` over `"split_cat"`.
+    - clone the input via `x = x.clone()` before applying partial convolution, but it introduces additional latency and can defeat the benefits of using `"slicing"` over `"split_cat"`.
     - move the shortcut after the PConv operator, which resolves the issue and is likely to maintain the effectiveness. Models modified are under retraining and will be released once finished.        
 - Latency and throughput are measured after merging the BatchNorm into Conv for all models if applicable. Due to an implementation bug in the initial version, the bias term after merging is wrongly omitted. After fixing the issue, most of the models, including other works compared, will be a bit slower than the statistics reported in the [paper v1](https://arxiv.org/abs/2303.03667). We will update the statistics soon.           
 

@@ -46,7 +46,7 @@ Although it do not affect the conclusion that FasterNet achieves higher accuracy
 - PConv and FasterNet use `"slicing"` type for faster inference and throughput measurement. 
 However, it implicitly modifies the shortcut, making a computation inconsistency to using `"split_cat"`. 
 To fix that, we may 
-    - clone the input via `x = x.clone()` before applying partial convolution, but it introduces additional latency and can defeats the benefits of using `"slicing"` over `"split_cat"`.
+    - clone the input via `x = x.clone()` before applying partial convolution, but it introduces additional latency and can defeat the benefits of using `"slicing"` over `"split_cat"`.
     - move the shortcut after the PConv operator, which resolves the issue and is likely to maintain the effectiveness. Models modified are under retraining and will be released once finished.        
 
 
