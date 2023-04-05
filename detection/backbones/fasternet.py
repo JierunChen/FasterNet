@@ -17,8 +17,6 @@ def fasternet_s(**kwargs):
         drop_path_rate=0.15,
         act_layer='RELU',
         fork_feat=True,
-        pconv_fw_type='split_cat',
-        # pconv_fw_type='slicing',  # TODO: move the residual connect after the pconv, retrain the model, and then use slicing for inference
         **kwargs
         )
 
@@ -34,8 +32,6 @@ def fasternet_m(**kwargs):
         drop_path_rate=0.2,
         act_layer='RELU',
         fork_feat=True,
-        pconv_fw_type='split_cat',
-        # pconv_fw_type='slicing',  # TODO: move the residual connect after the pconv, retrain the model, and then use slicing for inference
         **kwargs
         )
 
@@ -51,8 +47,6 @@ def fasternet_l(**kwargs):
         drop_path_rate=0.3,
         act_layer='RELU',
         fork_feat=True,
-        pconv_fw_type='split_cat',
-        # pconv_fw_type='slicing',  # TODO: move the residual connect after the pconv, retrain the model, and then use slicing for inference
         **kwargs
         )
 
