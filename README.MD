@@ -29,6 +29,7 @@ conda activate fasternet
 Clone this repo and install required packages:
 ```
 git clone https://github.com/JierunChen/FasterNet
+cd FasterNet/
 pip install -r requirements.txt
 ```
 
